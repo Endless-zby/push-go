@@ -22,14 +22,6 @@ func IsSuccessData(data interface{}) ApiResponse {
 	}
 }
 
-//func IsSuccessPageData(data interface{}) ApiResponse {
-//	return ApiResponse{
-//		Code:       0,
-//		ErrMessage: "",
-//		Data:       data,
-//	}
-//}
-
 func IsFail(code int, errMessage string) ApiResponse {
 	return ApiResponse{
 		Code:       code,
