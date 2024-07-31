@@ -2,6 +2,10 @@ package config
 
 import "github.com/spf13/viper"
 
+type ServerConfig struct {
+	Port int
+}
+
 type DatabaseConfig struct {
 	Type  string
 	Mysql struct {
@@ -16,8 +20,16 @@ type DatabaseConfig struct {
 	}
 }
 
+type ApnsConfig struct {
+	AuthKeyFile string
+	TeamID      string
+	KeyID       string
+}
+
 type Config struct {
+	Server   ServerConfig
 	Database DatabaseConfig
+	Apns     ApnsConfig
 }
 
 func LoadConfig(path string) (*Config, error) {

@@ -1,3 +1,5 @@
+server:
+  port: 10002
 database:
   type: "mysql" # "sqlite" 或 "mysql"
   mysql:
@@ -7,4 +9,8 @@ database:
     password: "zby123456"
     dbname: "byzhao"
   sqlite:
-    file: "../push.db"
+    file: "push.db"
+apns:
+  keyId: "LH4T9V5U4R"
+  teamId: "5U8LBRXG3A"
+  authKeyFile: "AuthKey_LH4T9V5U4R_5U8LBRXG3A.p8"

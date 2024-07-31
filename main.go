@@ -2,8 +2,10 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
+	"push-go/apns"
 	"push-go/config"
 	"push-go/db"
 	"push-go/handler"
@@ -34,7 +36,8 @@ func main() {
 	if err != nil {
 		log.Fatalf("Failed to load config: %v", err)
 	}
-	db.InitDb(&cfg.Database)
+	db.InitDb(&cfg.Database) // 初始化数据库
+	apns.Init(&cfg.Apns)     // 初始化apns连接
 	server := gin.Default()
 	server.Use(handler.Logger())
 	//server.Use(config.GlobalMiddleWare)
@@ -51,5 +54,5 @@ func main() {
 
 		king.GET("/getHistory", handler.HistoryGet)
 	}
-	server.Run(":10002")
+	server.Run(fmt.Sprintf(":%d", cfg.Server.Port))
 }

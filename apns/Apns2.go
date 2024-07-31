@@ -4,12 +4,13 @@ import (
 	"github.com/sideshow/apns2"
 	"github.com/sideshow/apns2/token"
 	"log"
+	"push-go/config"
 )
 
 var Client *apns2.Client
 
-func init() {
-	authKey, err := token.AuthKeyFromFile("AuthKey_LH4T9V5U4R_5U8LBRXG3A.p8")
+func Init(cfg *config.ApnsConfig) {
+	authKey, err := token.AuthKeyFromFile(cfg.AuthKeyFile)
 	if err != nil {
 		log.Fatal("token error:", err)
 	}
@@ -17,9 +18,9 @@ func init() {
 	apnsToken := &token.Token{
 		AuthKey: authKey,
 		// KeyID from developer account (Certificates, Identifiers & Profiles -> Keys)
-		KeyID: "LH4T9V5U4R",
+		KeyID: cfg.KeyID,
 		// TeamID from developer account (View Account -> Membership)
-		TeamID: "5U8LBRXG3A",
+		TeamID: cfg.TeamID,
 	}
 	Client = apns2.NewTokenClient(apnsToken).Production()
 }
