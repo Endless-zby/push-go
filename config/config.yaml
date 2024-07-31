@@ -1,0 +1,10 @@
+database:
+  type: "mysql" # "sqlite" 或 "mysql"
+  mysql:
+    host: "192.168.192.36"
+    port: 3306
+    user: "byzhao"
+    password: "zby123456"
+    dbname: "byzhao"
+  sqlite:
+    file: "../push.db"

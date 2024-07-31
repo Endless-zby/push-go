@@ -1,9 +1,12 @@
 package main
 
 import (
+	"flag"
 	"github.com/gin-gonic/gin"
+	"log"
 	"push-go/config"
-	"push-go/controller"
+	"push-go/db"
+	"push-go/handler"
 )
 
 // --------------热加载调试使用和说明--------------------
@@ -24,21 +27,29 @@ fresh会启动main文件并监控go程序的改动
 */
 
 func main() {
+	configPath := flag.String("config", "config/config.yaml", "Path to config file")
+	flag.Parse()
+
+	cfg, err := config.LoadConfig(*configPath)
+	if err != nil {
+		log.Fatalf("Failed to load config: %v", err)
+	}
+	db.InitDb(&cfg.Database)
 	server := gin.Default()
-	server.Use(config.Logger())
+	server.Use(handler.Logger())
 	//server.Use(config.GlobalMiddleWare)
-	king := server.Group("/king", config.GlobalMiddleWare)
+	king := server.Group("/king", handler.GlobalMiddleWare)
 	{
-		king.GET("/send", controller.SendGet)
-		king.POST("/send", controller.SendPost)
-		king.GET("/send/:clientId/:title/:body", controller.SendParam)
+		king.GET("/send", handler.SendGet)
+		king.POST("/send", handler.SendPost)
+		king.GET("/send/:clientId/:title/:body", handler.SendParam)
 
-		king.GET("/saveDrive", controller.SaveDriveGet)
-		king.POST("/saveDrive", controller.SaveDrivePost)
+		king.GET("/saveDrive", handler.SaveDriveGet)
+		king.POST("/saveDrive", handler.SaveDrivePost)
 
-		king.GET("/getDrive", controller.DriveGet)
+		king.GET("/getDrive", handler.DriveGet)
 
-		king.GET("/getHistory", controller.HistoryGet)
+		king.GET("/getHistory", handler.HistoryGet)
 	}
 	server.Run(":10002")
 }

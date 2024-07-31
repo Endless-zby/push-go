@@ -1,32 +1,28 @@
 package db
 
 import (
-	"flag"
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	"push-go/config"
 	"push-go/entity"
 )
 
 var PushDb *gorm.DB
 
-func init() {
-	// Define command-line flags
-	dbType := flag.String("db", "mysql", "Database type: sqlite or mysql")
-	flag.Parse()
-
+func InitDb(cfg *config.DatabaseConfig) {
 	var err error
 	var directory gorm.Dialector
 
-	switch *dbType {
+	switch cfg.Type {
 	case "sqlite":
-		directory = sqlite.Open("push.db")
+		directory = sqlite.Open(cfg.Sqlite.File)
 	case "mysql":
-		mysqlDSN := "byzhao:zby123456@tcp(192.168.192.36:3306)/byzhao?charset=utf8mb4&parseTime=True&loc=Local"
-		directory = mysql.Open(mysqlDSN)
+		connectionString := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local", cfg.Mysql.User, cfg.Mysql.Password, cfg.Mysql.Host, cfg.Mysql.Port, cfg.Mysql.Dbname)
+		directory = mysql.Open(connectionString)
 	default:
-		panic(fmt.Sprintf("Unsupported database type: %s", *dbType))
+		panic(fmt.Sprintf("Unsupported database type: %s", cfg.Type))
 	}
 
 	PushDb, err = gorm.Open(directory, &gorm.Config{})
