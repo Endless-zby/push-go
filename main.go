@@ -54,5 +54,8 @@ func main() {
 
 		king.GET("/getHistory", handler.HistoryGet)
 	}
-	server.Run(fmt.Sprintf(":%d", cfg.Server.Port))
+	errServer := server.Run(fmt.Sprintf(":%d", cfg.Server.Port))
+	if errServer != nil {
+		return
+	}
 }

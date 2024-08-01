@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# 定义目标平台
-platforms=("windows/amd64" "windows/386" "linux/amd64" "linux/386" "darwin/amd64" "darwin/arm64")
+# 定义目标平台  linux/armv7 为玩客云设备编译
+platforms=("windows/amd64" "windows/386" "linux/amd64" "linux/386" "linux/armv7" "darwin/amd64" "darwin/arm64")
 
 for platform in "${platforms[@]}"
 do

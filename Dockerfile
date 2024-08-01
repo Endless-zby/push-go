@@ -9,6 +9,6 @@ COPY . .
 
 RUN go build -o push-server .
 
-EXPOSE 8080
+EXPOSE 10002
 
 CMD ["./push-server", "-config", "/app/configs/config.yaml"]
