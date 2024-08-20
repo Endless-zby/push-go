@@ -37,7 +37,7 @@ func main() {
 		log.Fatalf("Failed to load config: %v", err)
 	}
 	db.InitDb(&cfg.Database) // 初始化数据库
-	apns.Init(&cfg.Apns)     // 初始化apns连接
+	apns.InitApns(&cfg.Apns) // 初始化apns连接
 	server := gin.Default()
 	server.Use(handler.Logger())
 	//server.Use(config.GlobalMiddleWare)

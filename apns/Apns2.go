@@ -9,7 +9,7 @@ import (
 
 var Client *apns2.Client
 
-func Init(cfg *config.ApnsConfig) {
+func InitApns(cfg *config.ApnsConfig) {
 	authKey, err := token.AuthKeyFromFile(cfg.AuthKeyFile)
 	if err != nil {
 		log.Fatal("token error:", err)
