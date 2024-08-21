@@ -18,7 +18,7 @@ do
     fi
 
     # 设置环境变量并编译
-    env GOOS=$GOOS GOARCH=$GOARCH go build -o $output_name
+    env GOOS=$GOOS GOARCH=$GOARCH go build -o build/$output_name
 
     if [ $? -ne 0 ]; then
         echo 'An error has occurred! Aborting the script execution...'
